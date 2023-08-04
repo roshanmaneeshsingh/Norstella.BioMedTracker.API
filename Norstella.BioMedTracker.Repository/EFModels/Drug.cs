@@ -1,12 +1,15 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
 
-namespace BioMedTracker.Repository.EFModels
+namespace BioMedTracker.Repository.EFModels;
+
+public partial class Drug
 {
-    public partial class Drug
-    {
-        public int DrugID { get; set; }
-        public string DrugName { get; set; }
-        public string BrandName { get; set; }
-        public string GenericName { get; set; }
-    }
+    public int DrugId { get; set; }
+
+    public string DrugName { get; set; }
+
+    public string BrandName { get; set; }
+
+    public string GenericName { get; set; }
 }

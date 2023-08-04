@@ -1,4 +1,5 @@
-﻿using BioMedTracker.Repository.EFModels;
+﻿using BioMedTracker.Repository;
+using BioMedTracker.Repository.EFModels;
 using BioMedTracker.Repository.Interfaces;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
@@ -15,35 +16,6 @@ namespace BioMedTracker.Repository
         {
             _dbContext = context;
         }
-
-        #region Clients
-
-        public async Task<ServiceEntities.Client> GetClientAsync(int clientId)
-        {
-            Client client = await _dbContext.Clients.AsNoTracking().FirstOrDefaultAsync(t => t.ClientId == clientId);
-            if (client == null)
-            {
-                return null;
-            }
-            ServiceEntities.Client result = new ServiceEntities.Client
-            {
-                ClientId = clientId,
-                ClientName = client.ClientName,
-                CopyFromClientId = client.CopyFromClientId == null ? 0 : client.CopyFromClientId.Value,
-            };
-            return result;
-        }
-
-        #endregion
-
-        #region Features
-        public async Task<ServiceEntities.Feature[]> GetFeaturesAsync()
-        {
-            var result = await _dbContext.Features.AsNoTracking().ToListAsync();
-
-            return result.Adapt<ServiceEntities.Feature[]>();
-        }
-        #endregion
 
         #region Drugs and Indications
         public async Task<ServiceEntities.Drug[]> GetAllDrugs()

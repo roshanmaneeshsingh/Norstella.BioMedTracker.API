@@ -22,6 +22,7 @@ using BioMedTracker.Repository;
 using BioMedTracker.Repository.Interfaces;
 using BioMedTracker.Services;
 using BioMedTracker.Shared.Models;
+using BioMedTracker.Repository;
 
 namespace BioMedTracker.Api
 {

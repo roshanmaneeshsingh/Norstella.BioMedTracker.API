@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using MMIT.BioMedTracker.Repository;
-using MMIT.BioMedTracker.Repository.Interfaces;
+using BioMedTracker.Repository;
+using BioMedTracker.Repository.Interfaces;
 using Moq;
 
-namespace MMIT.BioMedTracker.Test.Repository
+namespace BioMedTracker.Test.Repository
 {
     public abstract class RepositoryUnitTestBase
     {

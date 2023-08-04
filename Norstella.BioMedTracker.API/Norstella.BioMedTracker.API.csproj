@@ -30,6 +30,10 @@
     <PackageReference Include="Asp.Versioning.Mvc" Version="7.0.0" />
     <PackageReference Include="Auth0.AuthenticationApi" Version="7.22.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.9" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.9">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks" Version="7.0.9" />
     <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="7.0.9" />
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.32.0" />

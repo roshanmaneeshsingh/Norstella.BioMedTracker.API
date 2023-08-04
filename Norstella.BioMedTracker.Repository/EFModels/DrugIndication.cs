@@ -1,17 +1,21 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
 
-namespace BioMedTracker.Repository.EFModels
+namespace BioMedTracker.Repository.EFModels;
+
+public partial class DrugIndication
 {
-    public partial class DrugIndication
-    {
-        [Key]
-        public int RecordID { get; set; }
-        public int DrugID { get; set; }
-        public int IndicationID { get; set; }
-        public int SubIndicationID { get; set; }
-        public int SubSubIndicationID { get; set; }
-        public string IndicationName { get; set; }
-        public string SubIndicationName { get; set; }
-        public string SubSubIndicationName { get; set; }
-    }
+    public int RecordId { get; set; }
+
+    public int? DrugId { get; set; }
+
+    public int? IndicationId { get; set; }
+
+    public int? SubIndicationId { get; set; }
+
+    public int? SubSubIndicationId { get; set; }
+
+    public virtual ICollection<DrugEvent> DrugEvents { get; set; } = new List<DrugEvent>();
+
+    public virtual ICollection<Trial> Trials { get; set; } = new List<Trial>();
 }

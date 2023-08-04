@@ -17,7 +17,7 @@ namespace BioMedTracker.API.Controllers
     {
         private readonly IBioMedTrackerService _bioMedTrackerService;
 
-        public BioMedTrackerController(IBioMedTrackerService bioMedTrackerService) : base() 
+        public BioMedTrackerController(IBioMedTrackerService bioMedTrackerService) : base()
         {
             _bioMedTrackerService = bioMedTrackerService;
         }

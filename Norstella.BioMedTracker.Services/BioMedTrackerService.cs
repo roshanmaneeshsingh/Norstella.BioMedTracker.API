@@ -13,11 +13,6 @@ namespace BioMedTracker.Services
             _bioMedTrackerRepository = bioMedTrackerRepository;
         }
 
-        public async Task<Client> GetClientAsync(int clientId)
-        {
-            return await _bioMedTrackerRepository.GetClientAsync(clientId);
-        }
-
         public async Task<Drug[]> GetAllDrugs()
         {
             Drug[] result = await _bioMedTrackerRepository.GetAllDrugs();
