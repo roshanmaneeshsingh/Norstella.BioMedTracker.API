@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Norstella.BioMedTracker.API</name>
+    </assembly>
+    <members>
+        <member name="T:MMIT.BioMedTracker.Api.Models.CCApiResponse`1">
+            <summary>
+            Common response object for the API.  This is used to wrap the response from the service and return it to the client.
+            </summary>
+        </member>
+    </members>
+</doc>

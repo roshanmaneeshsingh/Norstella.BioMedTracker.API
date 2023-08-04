@@ -1,0 +1,27 @@
+﻿.swagger-ui .topbar {
+    background-color: #008cba;
+    border-bottom: 3px solid #006400;
+}
+.link > img {
+/*    content: url("mmit-logo-final-notext.png");*/    
+      content: url("MMIT-4c-logo-no-text.png");
+}
+.topbar-wrapper > a:after {
+    content: "BioMed Tracker Api";
+}
+.swagger-ui .topbar .download-url-wrapper .select-label select {
+    border: 2px solid #006400;
+}
+/*.opblock-tag-section > h4:before {
+    background-image: url('mmit-logo-final-small.png');
+    -ms-background-size: 30px 20px;
+    background-size: 30px 30px;
+    display: inline-block;
+    width: 30px;
+    height: 22px;
+    content: "";
+}*/
+.swagger-ui img {
+    border-style: none;
+    margin-right: 5px;
+}

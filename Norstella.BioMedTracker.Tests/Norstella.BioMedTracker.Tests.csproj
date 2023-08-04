@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.6.3" />
+    <PackageReference Include="Moq.EntityFrameworkCore" Version="7.0.0.2" />
+    <PackageReference Include="MSTest.TestAdapter" Version="3.1.1" />
+    <PackageReference Include="MSTest.TestFramework" Version="3.1.1" />
+    <PackageReference Include="coverlet.collector" Version="6.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Norstella.BioMedTracker.API\Norstella.BioMedTracker.API.csproj" />
+    <ProjectReference Include="..\Norstella.BioMedTracker.Repository.Interfaces\Norstella.BioMedTracker.Repository.Interfaces.csproj" />
+    <ProjectReference Include="..\Norstella.BioMedTracker.Repository\Norstella.BioMedTracker.Repository.csproj" />
+    <ProjectReference Include="..\Norstella.BioMedTracker.Services.Interfaces\Norstella.BioMedTracker.Services.Interfaces.csproj" />
+    <ProjectReference Include="..\Norstella.BioMedTracker.Services\Norstella.BioMedTracker.Services.csproj" />
+    <ProjectReference Include="..\Norstella.BioMedTracker.Shared\Norstella.BioMedTracker.Shared.csproj" />
+  </ItemGroup>
+
+</Project>

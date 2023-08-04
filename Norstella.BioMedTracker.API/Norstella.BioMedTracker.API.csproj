@@ -1,0 +1,54 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+	<GenerateDocumentationFile>true</GenerateDocumentationFile>
+	<NoWarn>$(NoWarn);1591</NoWarn>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>bin\Debug</OutputPath>
+    <DocumentationFile>MMIT.ClientConfiguration.Api.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>MMIT.ClientConfiguration.Api.xml</DocumentationFile>
+    <OutputPath>bin\Release</OutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Extensions\**" />
+    <Content Remove="Extensions\**" />
+    <EmbeddedResource Remove="Extensions\**" />
+    <None Remove="Extensions\**" />
+  </ItemGroup>  
+
+  <ItemGroup>
+    <PackageReference Include="Asp.Versioning.Mvc" Version="7.0.0" />
+    <PackageReference Include="Auth0.AuthenticationApi" Version="7.22.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.9" />
+    <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks" Version="7.0.9" />
+    <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="7.0.9" />
+    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.32.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+  </ItemGroup>  
+
+  <ItemGroup>
+    <ProjectReference Include="..\Norstella.BioMedTracker.Repository.Interfaces\Norstella.BioMedTracker.Repository.Interfaces.csproj" />
+    <ProjectReference Include="..\Norstella.BioMedTracker.Repository\Norstella.BioMedTracker.Repository.csproj" />
+    <ProjectReference Include="..\Norstella.BioMedTracker.Services.Interfaces\Norstella.BioMedTracker.Services.Interfaces.csproj" />
+    <ProjectReference Include="..\Norstella.BioMedTracker.Services\Norstella.BioMedTracker.Services.csproj" />
+    <ProjectReference Include="..\Norstella.BioMedTracker.Shared\Norstella.BioMedTracker.Shared.csproj" />
+  </ItemGroup>  
+
+  <ItemGroup>
+    <None Update="BioMedTracker.Api.xml">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+
+</Project>
