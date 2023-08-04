@@ -8,5 +8,7 @@ namespace BioMedTracker.Repository.Interfaces
         Task<Drug[]> GetAllDrugs();
         Task<DrugIndication[]> GetAllDrugIndications();
         Task<TrialDataNetRow[]> GetTrialsData(int drugIdFrom, int drugIdCompareTo);
+        Task<DrugsIndicationWithSubIndication[]> GetDrugsIndicationWithSubIndication(int drugIdFrom, int drugIdCompareTo);
+        Task<DrugEventsWithTrail[]> GetDrugEventsWithTrail(int drugId, int indicationId);
     }
 }

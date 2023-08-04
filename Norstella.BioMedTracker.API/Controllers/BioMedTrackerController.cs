@@ -7,6 +7,7 @@ using BioMedTracker.Shared.Models;
 using System;
 using System.Threading.Tasks;
 
+
 namespace BioMedTracker.API.Controllers
 {
     //[Authorize]
@@ -61,6 +62,34 @@ namespace BioMedTracker.API.Controllers
             catch (Exception e)
             {
                 return GetResponse<TrialDataNetRow[]>(e);
+            }
+        }
+
+        [HttpGet, Route("GetDrugsIndicationWithSubIndication/{drugIdFrom}/{drugIdCompareTo}")]
+        public async Task<CCApiResponse<DrugsIndicationWithSubIndication[]>> GetDrugsIndicationWithSubIndication(int drugIdFrom, int drugIdCompareTo)
+        {
+            try
+            {
+                DrugsIndicationWithSubIndication[] ret = await _bioMedTrackerService.GetDrugsIndicationWithSubIndication(drugIdFrom, drugIdCompareTo);
+                return GetResponse(ret);
+            }
+            catch (Exception e)
+            {
+                return GetResponse<DrugsIndicationWithSubIndication[]>(e);
+            }
+        }
+
+        [HttpGet, Route("GetDrugEventsWithTrail/{drugId}/{indicationId}")]
+        public async Task<CCApiResponse<DrugEventsWithTrail[]>> GetDrugEventsWithTrail(int drugId, int indicationId)
+        {
+            try
+            {
+                DrugEventsWithTrail[] ret = await _bioMedTrackerService.GetDrugEventsWithTrail(drugId, indicationId);
+                return GetResponse(ret);
+            }
+            catch (Exception e)
+            {
+                return GetResponse<DrugEventsWithTrail[]>(e);
             }
         }
     }

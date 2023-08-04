@@ -2,6 +2,7 @@
 using BioMedTracker.Shared.Models;
 using BioMedTracker.Repository.Interfaces;
 
+
 namespace BioMedTracker.Services
 {
     public class BioMedTrackerService : IBioMedTrackerService
@@ -28,6 +29,17 @@ namespace BioMedTracker.Services
         public async Task<TrialDataNetRow[]> GetTrialsData(int drugIdFrom, int drugIdCompareTo)
         {
             TrialDataNetRow[] result = await _bioMedTrackerRepository.GetTrialsData(drugIdFrom, drugIdCompareTo);
+            return result;
+        }
+
+        public async Task<DrugsIndicationWithSubIndication[]> GetDrugsIndicationWithSubIndication(int drugIdFrom, int drugIdCompareTo)
+        {
+            DrugsIndicationWithSubIndication[] result = await _bioMedTrackerRepository.GetDrugsIndicationWithSubIndication(drugIdFrom, drugIdCompareTo);
+            return result;
+        }
+        public async Task<DrugEventsWithTrail[]> GetDrugEventsWithTrail(int drugId, int indicationId)
+        {
+            DrugEventsWithTrail[] result = await _bioMedTrackerRepository.GetDrugEventsWithTrail(drugId, indicationId);
             return result;
         }
     }

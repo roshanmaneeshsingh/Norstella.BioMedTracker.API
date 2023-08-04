@@ -82,6 +82,64 @@ namespace BioMedTracker.Repository
             return result.Adapt<ServiceEntities.TrialDataNetRow[]>();
         }
         #endregion
+        #region DrugEventsWithTrail Data
+        public async Task<ServiceEntities.DrugEventsWithTrail[]> GetDrugEventsWithTrail(int drugId, int indicationId)
+        {
+            string[] jsonArray = await _dbContext.Database.SqlQuery<string>(
+
+                @$"select de.RecordID, 
+                    td.TrialDataID,
+                    et.EventType,
+                    de.EventDate 
+                    from dbo.DrugEvents de
+                    join dbo.TrialData td on de.RecordID = td.EventID 
+                    left join dbo.EventTypes et on de. EventTypeID = et.EventTypeID
+                    where de. DrugID={drugId} and de.IndicationID = {indicationId}
+                    order by de.EventDate desc
+                    for json path")
+                .ToArrayAsync();
+            string jsonResult = string.Concat(jsonArray);
+            DrugEventsWithTrail[] result = System.Text.Json.JsonSerializer.Deserialize<DrugEventsWithTrail[]>(jsonResult);
+            return result.Adapt<ServiceEntities.DrugEventsWithTrail[]>();
+        }
+        #endregion
+
+        #region Drugs Indication With SubIndication DATA
+        public async Task<ServiceEntities.DrugsIndicationWithSubIndication[]> GetDrugsIndicationWithSubIndication(int drugIdFrom, int drugIdCompareTo)
+        {
+            string[] jsonArray = await _dbContext.Database.SqlQuery<string>(
+
+                @$"select distinct i.IndicationID, 
+i.IndicationName,
+si.SubIndicationID, 
+si.SubIndicationName,
+ssi.SubSubIndicationID, 
+ssi.SubSubIndicationName
+from BioMedTracker.dbo.DrugIndications di
+left join dbo.Indications i on di.IndicationID = i.IndicationID
+left join dbo.SubIndications si on di.SubIndicationID = si.SubIndicationID 
+left join dbo.SubSubIndications ssi on di.SubSubIndicationID=ssi.SubSubIndicationID
+where DrugID = {drugIdFrom}
+intersect
+select distinct  i.IndicationID,
+i.IndicationName, 
+si.SubIndicationID,
+si.SubIndicationName, 
+ssi.SubSubIndicationID, 
+ssi.SubSubIndicationName
+from DrugIndications di
+left join dbo.Indications i on di.IndicationID = i.IndicationID
+left join dbo.SubIndications si on di.SubIndicationID = si.SubIndicationID 
+left join dbo.SubSubIndications ssi on di.SubSubIndicationID= ssi.SubSubIndicationID
+where DrugID={drugIdCompareTo}
+order by i.IndicationID, si.SubIndicationID, ssi.SubSubIndicationID) 
+                    for json path")
+                .ToArrayAsync();
+            string jsonResult = string.Concat(jsonArray);
+            DrugsIndicationWithSubIndication[] result = System.Text.Json.JsonSerializer.Deserialize<DrugsIndicationWithSubIndication[]>(jsonResult);
+            return result.Adapt<ServiceEntities.DrugsIndicationWithSubIndication[]>();
+        }
+        #endregion
 
     }
 }
