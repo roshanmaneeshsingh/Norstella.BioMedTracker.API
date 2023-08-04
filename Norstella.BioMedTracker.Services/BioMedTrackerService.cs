@@ -42,5 +42,21 @@ namespace BioMedTracker.Services
             DrugEventsWithTrail[] result = await _bioMedTrackerRepository.GetDrugEventsWithTrail(drugId, indicationId);
             return result;
         }
+        public async Task<TrailDataDescription[]> GetTrailDataDescription(int fromTrialDataID, int toTrialDataID, string description)
+        {
+            TrailDataDescription[] result = await _bioMedTrackerRepository.GetTrailDataDescription(fromTrialDataID, toTrialDataID, description);
+            return result;
+        }
+        public async Task<TrailDataDetails[]> GetTrailData(int trialDataID)
+        {
+            TrailDataDetails[] result = await _bioMedTrackerRepository.GetTrailData(trialDataID);
+            return result;
+        }
+
+        public async Task<TrailDataDescriptionDetails[]> GetTrailDataDescriptionDetails(int trialDescIDFrom, int trialDescIDTo)
+        {
+            TrailDataDescriptionDetails[] result = await _bioMedTrackerRepository.GetTrailDataDescriptionDetails(trialDescIDFrom, trialDescIDTo);
+            return result;
+        }
     }
 }

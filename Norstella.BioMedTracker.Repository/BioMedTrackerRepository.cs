@@ -104,6 +104,26 @@ namespace BioMedTracker.Repository
         }
         #endregion
 
+        #region DrugEventsWithTrail Data
+        public async Task<ServiceEntities.TrailDataDescription[]> GetTrailDataDescription(int fromTrialDataID, int toTrialDataID, string description)
+        {
+            string[] jsonArray = await _dbContext.Database.SqlQuery<string>(
+                 @$"select
+                 tdd. TrialDescID,
+                 tdd.Description
+                 from dbo.TrialDataDesc tdd 
+                 left join dbo.TrialData td on tdd.TrialDataID = td. TrialDataID
+                 left join dbo.DrugEvents de on td.EventID=de.RecordID
+                 where tdd. TrialDataID in ({fromTrialDataID}, {toTrialDataID}) and
+                 (tdd. Description like '%{description}%')
+                    for json path")
+                .ToArrayAsync();
+            string jsonResult = string.Concat(jsonArray);
+            TrailDataDescription[] result = System.Text.Json.JsonSerializer.Deserialize<TrailDataDescription[]>(jsonResult);
+            return result.Adapt<ServiceEntities.TrailDataDescription[]>();
+        }
+        #endregion
+
         #region Drugs Indication With SubIndication DATA
         public async Task<ServiceEntities.DrugsIndicationWithSubIndication[]> GetDrugsIndicationWithSubIndication(int drugIdFrom, int drugIdCompareTo)
         {
@@ -138,6 +158,69 @@ order by i.IndicationID, si.SubIndicationID, ssi.SubSubIndicationID)
             string jsonResult = string.Concat(jsonArray);
             DrugsIndicationWithSubIndication[] result = System.Text.Json.JsonSerializer.Deserialize<DrugsIndicationWithSubIndication[]>(jsonResult);
             return result.Adapt<ServiceEntities.DrugsIndicationWithSubIndication[]>();
+        }
+        #endregion
+
+        #region Trials Data
+        public async Task<ServiceEntities.TrailDataDetails[]> GetTrailData(int trialDataID)
+        {
+            string[] jsonArray = await _dbContext.Database.SqlQuery<string>(
+
+                @$"select
+                tdd.Description,
+                tdmt.MeasureTypeID,
+                (select tdg.TreatDesc from dbo.TrialDataGroup tdg where tdg.TrialDataID=td.TrialDataID and tdg.SortOrder = 1) TreatDesc_O1,
+                tdd.Grp1Sign,
+                tdd.Grp1Measure,
+                (select tdg.TreatDesc from dbo.TrialDataGroup tdg where tdg.TrialDataID = td.TrialDataID and tdg.SortOrder = 2)TreatDesc_O2,
+                tdd.Grp2Sign,
+                tdd.Grp2Measure,
+                (select tdg.TreatDesc from BioMedTracker.dbo.TrialDataGroup tdg where tdg.TrialDataID = td.TrialDataID and tdg.SortOrder = 3)TreatDesc_O3,
+                tdd.Grp3Sign,
+                tdd.Grp3Measure,
+                (select tdg.TreatDesc from dbo.TrialDataGroup tdg where tdg.TrialDataID = td.TrialDataID and tdg.SortOrder = 4) TreatDesc_O4,
+                tdd.Grp4Sign,
+                tdd.Grp4Measure
+                from dbo.TrialDataDesc tdd
+                left join dbo.TrialData td on tdd.TrialDataID = td.TrialDataID left join dbo.DrugEvents de on td.EventID=de.RecordID
+                left join dbo.TrialDataMeasureType tdmt on tdd.MeasureTypeID= tdmt.MeasureTypeID
+                where tdd.TrialDataID={trialDataID}
+                for json path")
+                .ToArrayAsync();
+            string jsonResult = string.Concat(jsonArray);
+            TrailDataDetails[] result = System.Text.Json.JsonSerializer.Deserialize<TrailDataDetails[]>(jsonResult);
+            return result.Adapt<ServiceEntities.TrailDataDetails[]>();
+        }
+        #endregion
+
+        #region  GetTrailDataDescriptionDetails
+        public async Task<ServiceEntities.TrailDataDescriptionDetails[]> GetTrailDataDescriptionDetails(int trialDescIDFrom, int trialDescIDTo)
+        {
+            string[] jsonArray = await _dbContext.Database.SqlQuery<string>(
+
+                @$"select
+                (select string_agg(t.TrialName, ', ') from dbo.Trials t where t.TrialID in (select value from string_split(de.TrialID, ','))) as TrialName,
+                tdd.Description,
+                (select tdg.TreatDesc from dbo.TrialDataGroup tdg where tdg.TrialDataID= td.TrialDataID and tdg.SortOrder = 1) TreatDesc_O1,
+                (select tdgt.GroupType from dbo.TrialDataGroupType tdgt where tdgt.GroupTypeID= td.Grp1ID) GroupType_O1,
+                tdd.Grp1Measure,
+                (select tdg.TreatDesc from dbo.TrialDataGroup tdg where tdg.TrialDataID=td.TrialDataID and tdg.SortOrder = 2) TreatDesc_O2,
+                (select tdgt.GroupType from dbo.TrialDataGroupType tdgt where tdgt.GroupTypeID = td.Grp2ID) GroupType_O2,
+                tdd.Grp2Measure,
+                (select tdg.TreatDesc from dbo.TrialDataGroup tdg where tdg.TrialDataID = td.TrialDataID and tdg.SortOrder = 3) TreatDesc_O3,
+                (select tdgt.GroupType from dbo.TrialDataGroupType tdgt where tdgt.GroupTypeID= td.Grp3ID) GroupType_O3,
+                tdd.Grp3Measure,
+                (select tdg.TreatDesc from BioMedTracker.dbo.TrialDataGroup tdg where tdg.TrialDataID = td.TrialDataID and tdg.SortOrder = 4) TreatDesc_O4,
+                (select tdgt.GroupType from dbo.TrialDataGroupType tdgt where tdgt.GroupTypeID= td.Grp4ID) GroupType_O4,
+                tdd.Grp4Measure
+                from dbo.TrialDataDesc tdd
+                left join dbo.TrialData td on tdd.TrialDataID = td.TrialDataID
+                left join dbo.DrugEvents de on td.EventID=de.RecordID where tdd.TrialDescID in ({trialDescIDFrom}, {trialDescIDTo})
+                for json path")
+                .ToArrayAsync();
+            string jsonResult = string.Concat(jsonArray);
+            TrailDataDescriptionDetails[] result = System.Text.Json.JsonSerializer.Deserialize<TrailDataDescriptionDetails[]>(jsonResult);
+            return result.Adapt<ServiceEntities.TrailDataDescriptionDetails[]>();
         }
         #endregion
 

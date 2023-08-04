@@ -92,5 +92,47 @@ namespace BioMedTracker.API.Controllers
                 return GetResponse<DrugEventsWithTrail[]>(e);
             }
         }
+        [HttpGet, Route("GetTrailDataDescription/{fromTrialDataID}/{toTrialDataID}/{description}")]
+        public async Task<CCApiResponse<TrailDataDescription[]>> GetTrailDataDescription(int fromTrialDataID, int toTrialDataID, string description)
+        {
+            try
+            {
+                TrailDataDescription[] ret = await _bioMedTrackerService.GetTrailDataDescription(fromTrialDataID, toTrialDataID, description);
+                return GetResponse(ret);
+            }
+            catch (Exception e)
+            {
+                return GetResponse<TrailDataDescription[]>(e);
+            }
+        }
+
+        [HttpGet, Route("GetTrailData/{trialDataID}")]
+        public async Task<CCApiResponse<TrailDataDetails[]>> GetTrailData(int trialDataID)
+        {
+            try
+            {
+                TrailDataDetails[] ret = await _bioMedTrackerService.GetTrailData(trialDataID);
+                return GetResponse(ret);
+            }
+            catch (Exception e)
+            {
+                return GetResponse<TrailDataDetails[]>(e);
+            }
+        }
+
+        [HttpGet, Route("GetTrailDataDescriptionDetails/{trialDescIDFrom}/{trialDescIDTo}")]
+        public async Task<CCApiResponse<TrailDataDescriptionDetails[]>> GetTrailDataDescriptionDetails(int trialDescIDFrom, int trialDescIDTo)
+        {
+            try
+            {
+                TrailDataDescriptionDetails[] ret = await _bioMedTrackerService.GetTrailDataDescriptionDetails(trialDescIDFrom, trialDescIDTo);
+                return GetResponse(ret);
+            }
+            catch (Exception e)
+            {
+                return GetResponse<TrailDataDescriptionDetails[]>(e);
+            }
+        }
+
     }
 }
