@@ -1,12 +1,9 @@
-﻿using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using Mapster;
-using ServiceEntities = BioMedTracker.Shared.Models;
-using ValidationResponse=BioMedTracker.Shared.Models.ValidationResponse;
-using BioMedTracker.Repository.EFModels;
+﻿using BioMedTracker.Repository.EFModels;
 using BioMedTracker.Repository.Interfaces;
-using System.Linq;
-using System.Collections.Generic;
+using Mapster;
+using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
+using ServiceEntities = BioMedTracker.Shared.Models;
 
 namespace BioMedTracker.Repository
 {
@@ -36,7 +33,7 @@ namespace BioMedTracker.Repository
             };
             return result;
         }
-        
+
         #endregion
 
         #region Features
@@ -68,7 +65,7 @@ namespace BioMedTracker.Repository
         public async Task<ServiceEntities.TrialDataNetRow[]> GetTrialsData(int drugIdFrom, int drugIdCompareTo)
         {
             string[] jsonArray = await _dbContext.Database.SqlQuery<string>(
-                
+
                 @$"select distinct
                         de.DrugID,
 	                    tdd.TrialDescID,
