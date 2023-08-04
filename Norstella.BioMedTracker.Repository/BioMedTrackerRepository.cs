@@ -224,5 +224,24 @@ order by i.IndicationID, si.SubIndicationID, ssi.SubSubIndicationID)
         }
         #endregion
 
+
+        #region  GetTrailInfo
+        public async Task<ServiceEntities.TrailInfo[]> GetTrailInfo(int drugID, int indicationID)
+        {
+            string[] jsonArray = await _dbContext.Database.SqlQuery<string>(
+
+                @$"select de.RecordID, td.TrialDataID, t.PrimaryID, t.TrialName, t.Pivotal, de.EventDate
+                 from dbo.Trials t
+                 join dbo.TrialEvents te on t.TrialID = te.TrialID
+                 join dbo.DrugEvents de on te.EventID=de.RecordID join dbo.TrialData td on de.RecordID = td.EventID where de.DrugID = {drugID} and de.IndicationID = {indicationID}
+                 order by de.EventDate desc
+                for json path")
+                .ToArrayAsync();
+            string jsonResult = string.Concat(jsonArray);
+            TrailInfo[] result = System.Text.Json.JsonSerializer.Deserialize<TrailInfo[]>(jsonResult);
+            return result.Adapt<ServiceEntities.TrailInfo[]>();
+        }
+        #endregion
+
     }
 }

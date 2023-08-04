@@ -13,5 +13,6 @@ namespace BioMedTracker.Repository.Interfaces
         Task<TrailDataDescription[]> GetTrailDataDescription(int fromTrialDataID, int toTrialDataID, string description);
         Task<TrailDataDetails[]> GetTrailData(int trialDataID);
         Task<TrailDataDescriptionDetails[]> GetTrailDataDescriptionDetails(int trialDescIDFrom, int trialDescIDTo);
+        Task<TrailInfo[]> GetTrailInfo(int drugID, int indicationID);
     }
 }

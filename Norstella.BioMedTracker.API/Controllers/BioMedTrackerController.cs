@@ -133,6 +133,19 @@ namespace BioMedTracker.API.Controllers
                 return GetResponse<TrailDataDescriptionDetails[]>(e);
             }
         }
+        [HttpGet, Route("GetTrailInfo/{drugID}/{indicationID}")]
+        public async Task<CCApiResponse<TrailInfo[]>> GetTrailInfo(int drugID, int indicationID)
+        {
+            try
+            {
+                TrailInfo[] ret = await _bioMedTrackerService.GetTrailInfo(drugID, indicationID);
+                return GetResponse(ret);
+            }
+            catch (Exception e)
+            {
+                return GetResponse<TrailInfo[]>(e);
+            }
+        }
 
     }
 }

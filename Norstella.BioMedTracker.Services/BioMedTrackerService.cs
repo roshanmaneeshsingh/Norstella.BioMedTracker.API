@@ -58,5 +58,10 @@ namespace BioMedTracker.Services
             TrailDataDescriptionDetails[] result = await _bioMedTrackerRepository.GetTrailDataDescriptionDetails(trialDescIDFrom, trialDescIDTo);
             return result;
         }
+        public async Task<TrailInfo[]> GetTrailInfo(int drugID, int indicationID)
+        {
+            TrailInfo[] result = await _bioMedTrackerRepository.GetTrailInfo(drugID, indicationID);
+            return result;
+        }
     }
 }
